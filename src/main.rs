@@ -1,3 +1,5 @@
+use std::f32::consts::{FRAC_1_PI, FRAC_2_PI, PI};
+
 use bevy::prelude::*;
 
 #[derive(Component)]
@@ -16,10 +18,10 @@ impl Default for PlayerBundle {
             sprite: SpriteBundle {
                 sprite: Sprite {
                     color: Color::WHITE,
-                    custom_size: Some(Vec2::new(20.0, 20.0)),
+                    custom_size: Some(Vec2::new(50.0, 50.0)),
                     ..default()
                 },
-                transform: Transform::from_translation(Vec3::new(10.0, 10.0, 0.0)),
+                transform: Transform::from_translation(Vec3::new(0.0, 0.0, 0.0)),
                 ..default()
             },
         }
@@ -37,7 +39,7 @@ struct PlayerPlugin;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, spawn_player);
-        app.add_systems(Update, (move_player, player_look));
+        app.add_systems(Update, (move_player, player_look_at_mouse));
     }
 }
 
@@ -71,7 +73,7 @@ fn move_player(
     player_transform.translation += direction.extend(0.0) * 300.0 * time.delta_seconds();
 }
 
-fn player_look(
+fn player_look_at_mouse(
     q_window: Query<&Window>,
     q_camera: Query<(&Camera, &GlobalTransform)>,
     mut query: Query<&mut Transform, With<Player>>,
@@ -85,10 +87,16 @@ fn player_look(
         .and_then(|cursor| camera.viewport_to_world(camera_transform, cursor))
         .map(|ray| ray.origin.truncate())
     {
-        let angle = (mouse_position - player_transform.translation.xy())
-            .angle_between(player_transform.translation.xy());
+        let angle = (player_transform.translation.xy() - mouse_position).angle_between(Vec2::X);
+
         player_transform.rotation = Quat::from_rotation_z(-angle);
     }
+}
+
+fn player_rotate(mut query: Query<&mut Transform, With<Player>>, time: Res<Time>) {
+    let mut player_transform = query.single_mut();
+
+    player_transform.rotate_z(PI * time.delta_seconds());
 }
 
 fn spawn_player(mut commands: Commands) {
