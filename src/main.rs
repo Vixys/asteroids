@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
-mod movement;
-mod warp;
 mod asteroid;
+mod movement;
 mod player;
+mod warp;
 
 use asteroid::AsteroidPlugin;
 use player::PlayerPlugin;

@@ -2,18 +2,17 @@ use bevy::prelude::*;
 
 use std::f32::consts::{FRAC_PI_2, PI};
 
-use crate::warp::components::Warp;
 use crate::movement::components::Movement;
+use crate::warp::components::Warp;
 
 use super::bundles::PlayerBundle;
 use super::components::*;
-
 
 const PLAYER_ROTATION_SPEED: f32 = PI;
 const PLAYER_SPEED: f32 = 300.0;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((PlayerBundle::new(asset_server), Warp::default()));
+    commands.spawn((PlayerBundle::new(asset_server), Warp));
 }
 
 pub fn player_input(

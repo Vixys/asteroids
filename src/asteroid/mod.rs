@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
-mod components;
-mod systems;
-mod resources;
 mod bundles;
+mod components;
+mod resources;
+mod systems;
 
 use resources::*;
 use systems::*;
@@ -15,6 +15,7 @@ impl Plugin for AsteroidPlugin {
         app.insert_resource(AsteroidSpawner {
             timer: Timer::from_seconds(5.0, TimerMode::Repeating),
         })
-            .add_systems(Update, (spawn_asteroid, asteroid_rotate_system));
+        .add_systems(Startup, setup)
+        .add_systems(Update, (spawn_asteroid, asteroid_rotate_system));
     }
 }

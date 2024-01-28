@@ -1,12 +1,12 @@
 use bevy::prelude::*;
 
+mod bundles;
 mod components;
 mod systems;
-mod bundles;
 
-use systems::*;
-use crate::warp::WarpPlugin;
 use crate::movement::MovementPlugin;
+use crate::warp::WarpPlugin;
+use systems::*;
 
 pub struct PlayerPlugin;
 

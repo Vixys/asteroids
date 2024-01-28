@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use super::components::*;
+use bevy::prelude::*;
 
 pub fn movement_system(mut query: Query<(&mut Movement, &mut Transform)>, time: Res<Time>) {
     for (mut movement, mut transform) in query.iter_mut() {

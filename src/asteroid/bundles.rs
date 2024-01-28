@@ -1,5 +1,5 @@
 use bevy::asset::AssetServer;
-use bevy::prelude::{Bundle, default, Res, SpriteBundle};
+use bevy::prelude::{default, Bundle, Res, SpriteBundle};
 
 use crate::movement::components::Movement;
 
@@ -8,7 +8,7 @@ use super::components::*;
 #[derive(Bundle)]
 pub struct AsteroidBundle {
     asteroid: Asteroid,
-    sprite: SpriteBundle,
+    pub sprite: SpriteBundle,
     pub movement: Movement,
 }
 

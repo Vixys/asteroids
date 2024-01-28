@@ -1,6 +1,14 @@
-use std::ops::Range;
 use bevy::asset::AssetPath;
+use bevy::math::Vec2;
 use bevy::prelude::Component;
+use std::ops::Range;
+
+#[derive(Component, Debug)]
+pub struct AsteroidSpawnArea {
+    pub from: Vec2,
+    pub to: Vec2,
+    pub spawn_angle_range: Range<f32>,
+}
 
 #[derive(Component)]
 pub struct Asteroid {
