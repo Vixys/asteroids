@@ -2,14 +2,22 @@
 
 ## Todo
 
-- Player
-    - Player movement
-    - Player collision
-    - Player attack
-- Asteriods
-    - Asteriod movement
-    - Asteriod collision
-- Laser
-    - Laser movement
-    - Laser collision
+- [ ] Player
+    - [x] Player movement
+    - [ ] Player attack
+- [ ] Asteriods
+    - [x] Asteriod movement
+- [ ] Laser
+    - [ ] Laser movement
+- [ ] Warp
+    - [x] Warp object
+    - [ ] Improvmement
+        - [ ] Base on direction
+        - [ ] Copy entity
+- [ ] Collision
+    - [ ] Collision detection
+        - [ ] Component
+        - [ ] System
+    - [ ] Player and Asteriod
+    - [ ] Laser and Asteriod
 

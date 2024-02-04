@@ -12,7 +12,7 @@ const PLAYER_ROTATION_SPEED: f32 = PI;
 const PLAYER_SPEED: f32 = 300.0;
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn((PlayerBundle::new(asset_server), Warp));
+    commands.spawn(PlayerBundle::new(asset_server));
 }
 
 pub fn player_input(

@@ -1,6 +1,7 @@
 use bevy::asset::AssetPath;
 use bevy::math::Vec2;
 use bevy::prelude::Component;
+use rand::prelude::*;
 use std::ops::Range;
 
 #[derive(Component, Debug)]
@@ -18,9 +19,10 @@ pub struct Asteroid {
 
 impl Asteroid {
     pub fn new(shape: &AsteroidShape) -> Self {
+        let mut rng = rand::thread_rng();
         Self {
-            shape: shape.clone(),
-            rotation_speed: shape.get_random_rotation_speed().start,
+            shape: *shape,
+            rotation_speed: rng.gen_range(shape.get_random_rotation_speed()),
         }
     }
 }

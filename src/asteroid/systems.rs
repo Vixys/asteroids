@@ -1,11 +1,12 @@
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
-use rand::distributions::Standard;
 use rand::prelude::*;
 use std::f32::consts::*;
 use std::ops::Range;
 
-use crate::warp::components::Warp;
+use crate::collider::components::*;
+use crate::collider::events::*;
+use crate::movement::components::Movement;
 
 use super::bundles::*;
 use super::components::*;
@@ -93,7 +94,7 @@ pub fn spawn_asteroid(
         if let Some(area) = spawn_area_query.iter().choose(&mut rng) {
             println!("#### ASTEROID SPAWN ####");
             print!("area: {:?}", area);
-            let mut asteroid = AsteroidBundle::new(AsteroidShape::BigRound, asset_server);
+            let mut asteroid = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
             asteroid.movement.velocity =
                 Quat::from_rotation_z(rng.gen_range(area.spawn_angle_range.clone()))
                     .mul_vec3(Vec3::X)
@@ -105,9 +106,43 @@ pub fn spawn_asteroid(
                 area.from.lerp(area.to, rng.gen::<f32>()).extend(0.0);
             println!("position: {:?}", asteroid.sprite.transform.translation);
             println!("velocity: {:?}", asteroid.movement.velocity);
-            commands.spawn((asteroid, Warp));
+            commands.spawn(asteroid);
         } else {
             println!("No spawn area found!");
+        }
+    }
+}
+
+pub fn on_collistion_system(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    mut collision_events: EventReader<CollisionEvent>,
+    query: Query<(Entity, &Transform, &Movement), With<Asteroid>>,
+) {
+    let mut rng = thread_rng();
+    for event in collision_events.read() {
+        let entity2 = query.get(event.entity2);
+
+        if let Ok((entity, transform, movement)) = entity2 {
+            let mut new_asteroid = AsteroidBundle::new(AsteroidShape::SmallRound, &asset_server);
+            let mut new_asteroid2 = AsteroidBundle::new(AsteroidShape::SmallRound, &asset_server);
+            new_asteroid.sprite.transform = *transform;
+            new_asteroid.movement.velocity = Quat::from_rotation_z(FRAC_PI_2)
+                .mul_vec3(movement.velocity.extend(0.0))
+                .truncate()
+                .normalize()
+                * rng.gen_range(ASTEROID_SPEED_RANGE.clone())
+                * ASTEROID_MAX_SPEED;
+            new_asteroid2.sprite.transform = *transform;
+            new_asteroid2.movement.velocity = Quat::from_rotation_z(-FRAC_PI_2)
+                .mul_vec3(movement.velocity.extend(0.0))
+                .truncate()
+                .normalize()
+                * rng.gen_range(ASTEROID_SPEED_RANGE.clone())
+                * ASTEROID_MAX_SPEED;
+            commands.spawn(new_asteroid);
+            commands.spawn(new_asteroid2);
+            commands.entity(entity).despawn();
         }
     }
 }
