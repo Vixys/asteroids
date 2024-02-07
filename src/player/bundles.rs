@@ -3,6 +3,7 @@ use bevy::prelude::*;
 const PLAYER_SHIP_ASSET_PATH: &str = "ship_B.png";
 
 use crate::collider::components::*;
+use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
 use crate::movement::components::Movement;
 use crate::warp::components::Warp;
 
@@ -29,8 +30,8 @@ impl PlayerBundle {
             warp: Warp {},
             collider: Collider {
                 shape: ColliderShape::Circle(16.0),
-                collision_layer: 0b0000_0000_0000_0000_0000_0000_0000_0010,
-                collision_mask: 0b0000_0000_0000_0000_0000_0000_0000_0001,
+                collision_layer: PLAYER_COLLISION_LAYER,
+                collision_mask: ZERO_COLLISION_LAYER,
             },
         }
     }

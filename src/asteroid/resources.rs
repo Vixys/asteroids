@@ -1,4 +1,4 @@
-use bevy::prelude::{Resource, Timer, Vec2};
+use bevy::prelude::{Resource, Timer};
 
 #[derive(Resource)]
 pub struct AsteroidSpawner {

@@ -2,17 +2,18 @@ use bevy::prelude::*;
 
 use std::f32::consts::{FRAC_PI_2, PI};
 
+use crate::collider::events::CollisionEvent;
 use crate::movement::components::Movement;
-use crate::warp::components::Warp;
 
 use super::bundles::PlayerBundle;
 use super::components::*;
+use super::events::SpawnPlayerEvent;
 
 const PLAYER_ROTATION_SPEED: f32 = PI;
 const PLAYER_SPEED: f32 = 300.0;
 
-pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(PlayerBundle::new(asset_server));
+pub fn spawn_player(mut spawn_events: EventWriter<SpawnPlayerEvent>) {
+    spawn_events.send(SpawnPlayerEvent);
 }
 
 pub fn player_input(
@@ -40,5 +41,31 @@ pub fn player_input(
                     .normalize();
             movement.velocity += direction * PLAYER_SPEED * time.delta_seconds();
         }
+    }
+}
+
+pub fn on_collistion_system(
+    mut commands: Commands,
+    mut collision_events: EventReader<CollisionEvent>,
+    mut spawn_events: EventWriter<SpawnPlayerEvent>,
+    query: Query<Entity, With<Player>>,
+) {
+    for event in collision_events.read() {
+        let entity2 = query.get(event.entity2);
+
+        if let Ok(entity) = entity2 {
+            commands.entity(entity).despawn();
+            spawn_events.send(SpawnPlayerEvent);
+        }
+    }
+}
+
+pub fn on_spawn_player_system(
+    mut commands: Commands,
+    spawn_events: EventReader<SpawnPlayerEvent>,
+    asset_server: Res<AssetServer>,
+) {
+    if !spawn_events.is_empty() {
+        commands.spawn(PlayerBundle::new(asset_server));
     }
 }

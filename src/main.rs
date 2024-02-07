@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 mod asteroid;
 mod collider;
+mod constants;
 mod movement;
 mod player;
 mod warp;
