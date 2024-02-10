@@ -4,7 +4,6 @@ use rand::prelude::*;
 use std::f32::consts::*;
 use std::ops::Range;
 
-use crate::collider::components::*;
 use crate::collider::events::*;
 use crate::movement::components::Movement;
 
@@ -17,12 +16,32 @@ const ASTEROID_PADDING_SPAWN_LOCATION: f32 = 150.0;
 
 static ASTEROID_SPEED_RANGE: Range<f32> = 0.65..1.1;
 
-pub fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWindow>>) {
-    commands.insert_resource(AsteroidSpawner {
-        timer: Timer::from_seconds(5.0, TimerMode::Repeating),
-    });
+pub fn setup(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    window_query: Query<&Window, With<PrimaryWindow>>,
+) {
+    // commands.insert_resource(AsteroidSpawner {
+    //     timer: Timer::from_seconds(5.0, TimerMode::Repeating),
+    // });
 
     let window = window_query.get_single().unwrap();
+
+    let mut asteroid1 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    asteroid1.sprite.transform.translation = Vec3::new(-150.0, 150.0, 0.0);
+    commands.spawn(asteroid1);
+
+    let mut asteroid2 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    asteroid2.sprite.transform.translation = Vec3::new(-150.0, -150.0, 0.0);
+    commands.spawn(asteroid2);
+
+    let mut asteroid3 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    asteroid3.sprite.transform.translation = Vec3::new(150.0, -150.0, 0.0);
+    commands.spawn(asteroid3);
+
+    let mut asteroid4 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    asteroid4.sprite.transform.translation = Vec3::new(150.0, 150.0, 0.0);
+    commands.spawn(asteroid4);
 
     // TOP
     commands.spawn(AsteroidSpawnArea {

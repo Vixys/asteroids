@@ -18,7 +18,10 @@ impl Plugin for AsteroidPlugin {
         .add_systems(Startup, setup)
         .add_systems(
             Update,
-            (spawn_asteroid, asteroid_rotate_system, on_collistion_system),
+            (
+                /*spawn_asteroid,*/ asteroid_rotate_system,
+                on_collistion_system,
+            ),
         );
     }
 }

@@ -2,6 +2,7 @@ use bevy::prelude::*;
 
 use std::f32::consts::{FRAC_PI_2, PI};
 
+use crate::bullet::bundles::BulletBundle;
 use crate::collider::events::CollisionEvent;
 use crate::movement::components::Movement;
 
@@ -17,6 +18,8 @@ pub fn spawn_player(mut spawn_events: EventWriter<SpawnPlayerEvent>) {
 }
 
 pub fn player_input(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
     mut query: Query<(&mut Movement, &mut Transform), With<Player>>,
     keyboard_input: Res<Input<KeyCode>>,
     time: Res<Time>,
@@ -40,6 +43,12 @@ pub fn player_input(
                 Vec2::from_angle(player_transform.rotation.to_scaled_axis().z + FRAC_PI_2)
                     .normalize();
             movement.velocity += direction * PLAYER_SPEED * time.delta_seconds();
+        }
+
+        if keyboard_input.just_pressed(KeyCode::Space) {
+            let bullet = BulletBundle::new(&player_transform, &asset_server);
+            println!("Bullet spawned");
+            commands.spawn(bullet);
         }
     }
 }

@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 mod asteroid;
+mod bullet;
 mod collider;
 mod constants;
 mod movement;

@@ -5,6 +5,7 @@ mod components;
 mod events;
 mod systems;
 
+use crate::bullet::BulletPlugin;
 use crate::movement::MovementPlugin;
 use crate::warp::WarpPlugin;
 use systems::*;
@@ -22,6 +23,7 @@ impl Plugin for PlayerPlugin {
             )
             .add_plugins(WarpPlugin)
             .add_plugins(MovementPlugin)
+            .add_plugins(BulletPlugin)
             .add_event::<SpawnPlayerEvent>();
     }
 }
