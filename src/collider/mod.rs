@@ -12,6 +12,6 @@ pub struct ColliderPlugin;
 impl Plugin for ColliderPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<CollisionEvent>()
-            .add_systems(Update, check_collision);
+            .add_systems(FixedUpdate, check_collision);
     }
 }

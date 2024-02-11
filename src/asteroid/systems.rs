@@ -29,18 +29,22 @@ pub fn setup(
 
     let mut asteroid1 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
     asteroid1.sprite.transform.translation = Vec3::new(-150.0, 150.0, 0.0);
+    asteroid1.movement.velocity = Vec2::new(-0.1, 0.1);
     commands.spawn(asteroid1);
 
     let mut asteroid2 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
     asteroid2.sprite.transform.translation = Vec3::new(-150.0, -150.0, 0.0);
+    asteroid2.movement.velocity = Vec2::new(-0.1, -0.1);
     commands.spawn(asteroid2);
 
     let mut asteroid3 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
     asteroid3.sprite.transform.translation = Vec3::new(150.0, -150.0, 0.0);
+    asteroid3.movement.velocity = Vec2::new(0.1, -0.1);
     commands.spawn(asteroid3);
 
     let mut asteroid4 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
     asteroid4.sprite.transform.translation = Vec3::new(150.0, 150.0, 0.0);
+    asteroid4.movement.velocity = Vec2::new(0.1, 0.1);
     commands.spawn(asteroid4);
 
     // TOP
@@ -159,8 +163,15 @@ pub fn on_collistion_system(
                 .normalize()
                 * rng.gen_range(ASTEROID_SPEED_RANGE.clone())
                 * ASTEROID_MAX_SPEED;
+            println!("#### ASTEROID SPAWN ####");
+            println!("position: {:?}", new_asteroid.sprite.transform.translation);
+            println!("velocity: {:?}", new_asteroid.movement.velocity);
+            println!("#### ASTEROID SPAWN ####");
+            println!("position: {:?}", new_asteroid2.sprite.transform.translation);
+            println!("velocity: {:?}", new_asteroid2.movement.velocity);
             commands.spawn(new_asteroid);
             commands.spawn(new_asteroid2);
+            println!("Asteroid collision: ");
             commands.entity(entity).despawn();
         }
     }
