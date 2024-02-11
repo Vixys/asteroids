@@ -16,9 +16,9 @@ pub fn warp_system(
         if let Some(mut entity_pos) =
             camera.world_to_viewport(camera_transform, transform.translation)
         {
-            if entity_pos.y > window.height() && movement.velocity.y > 0.0 {
+            if entity_pos.y > window.height() && movement.velocity.y < 0.0 {
                 entity_pos.y = 0.0;
-            } else if entity_pos.y < 0.0 && movement.velocity.y < 0.0 {
+            } else if entity_pos.y < 0.0 && movement.velocity.y > 0.0 {
                 entity_pos.y = window.height();
             }
             if entity_pos.x > window.width() && movement.velocity.x > 0.0 {

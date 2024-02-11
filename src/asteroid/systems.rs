@@ -29,23 +29,23 @@ pub fn setup(
 
     let mut asteroid1 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
     asteroid1.sprite.transform.translation = Vec3::new(-150.0, 150.0, 0.0);
-    asteroid1.movement.velocity = Vec2::new(-0.1, 0.1);
+    asteroid1.movement.velocity = Vec2::new(0.0, -100.0);
     commands.spawn(asteroid1);
 
-    let mut asteroid2 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
-    asteroid2.sprite.transform.translation = Vec3::new(-150.0, -150.0, 0.0);
-    asteroid2.movement.velocity = Vec2::new(-0.1, -0.1);
-    commands.spawn(asteroid2);
+    // let mut asteroid2 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    // asteroid2.sprite.transform.translation = Vec3::new(-150.0, -150.0, 0.0);
+    // asteroid2.movement.velocity = Vec2::new(-0.1, -0.1);
+    // commands.spawn(asteroid2);
 
-    let mut asteroid3 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
-    asteroid3.sprite.transform.translation = Vec3::new(150.0, -150.0, 0.0);
-    asteroid3.movement.velocity = Vec2::new(0.1, -0.1);
-    commands.spawn(asteroid3);
+    // let mut asteroid3 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    // asteroid3.sprite.transform.translation = Vec3::new(150.0, -150.0, 0.0);
+    // asteroid3.movement.velocity = Vec2::new(0.1, -0.1);
+    // commands.spawn(asteroid3);
 
-    let mut asteroid4 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
-    asteroid4.sprite.transform.translation = Vec3::new(150.0, 150.0, 0.0);
-    asteroid4.movement.velocity = Vec2::new(0.1, 0.1);
-    commands.spawn(asteroid4);
+    // let mut asteroid4 = AsteroidBundle::new(AsteroidShape::BigRound, &asset_server);
+    // asteroid4.sprite.transform.translation = Vec3::new(150.0, 150.0, 0.0);
+    // asteroid4.movement.velocity = Vec2::new(0.1, 0.1);
+    // commands.spawn(asteroid4);
 
     // TOP
     commands.spawn(AsteroidSpawnArea {
