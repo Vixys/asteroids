@@ -21,24 +21,24 @@ pub fn player_input(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut query: Query<(&mut Movement, &mut Transform), With<Player>>,
-    keyboard_input: Res<Input<KeyCode>>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
 ) {
     for (mut movement, mut player_transform) in query.iter_mut() {
-        if keyboard_input.pressed(KeyCode::Left) {
+        if keyboard_input.pressed(KeyCode::ArrowLeft) {
             player_transform.rotate_z(PLAYER_ROTATION_SPEED * time.delta_seconds());
         }
-        if keyboard_input.pressed(KeyCode::Right) {
+        if keyboard_input.pressed(KeyCode::ArrowRight) {
             player_transform.rotate_z(-PLAYER_ROTATION_SPEED * time.delta_seconds());
         }
 
-        if keyboard_input.pressed(KeyCode::R) {
+        if keyboard_input.pressed(KeyCode::KeyR) {
             player_transform.rotation = Quat::from_rotation_z(0.0);
             player_transform.translation = Vec3::ZERO;
             movement.velocity = Vec2::ZERO;
         }
 
-        if keyboard_input.pressed(KeyCode::Up) {
+        if keyboard_input.pressed(KeyCode::ArrowUp) {
             let direction =
                 Vec2::from_angle(player_transform.rotation.to_scaled_axis().z + FRAC_PI_2)
                     .normalize();

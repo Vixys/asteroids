@@ -20,7 +20,7 @@ fn main() {
         .add_plugins(PlayerPlugin)
         .add_plugins(AsteroidPlugin)
         .add_plugins(ColliderPlugin)
-        .add_plugins(WorldInspectorPlugin::new())
+        // .add_plugins(WorldInspectorPlugin::new())
         .add_systems(Startup, setup)
         .run();
 }
