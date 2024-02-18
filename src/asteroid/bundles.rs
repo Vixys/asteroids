@@ -3,35 +3,34 @@ use bevy::prelude::{default, Bundle, Res, SpriteBundle};
 
 use crate::collider::components::*;
 use crate::constants::{ASTEROID_COLLISION_LAYER, PLAYER_COLLISION_LAYER};
-use crate::movement::components::Movement;
+use crate::movement::components::*;
 use crate::warp::components::Warp;
 
 use super::components::*;
 
 #[derive(Bundle)]
 pub struct AsteroidBundle {
-    asteroid: Asteroid,
+    pub asteroid: Asteroid,
     pub sprite: SpriteBundle,
     pub movement: Movement,
-    warp: Warp,
+    pub warp: Warp,
     pub collider: Collider,
+    pub angular_velocity: AngularVelocity,
 }
 
-impl AsteroidBundle {
-    pub fn new(shape: AsteroidShape, asset_server: &Res<AssetServer>) -> Self {
+impl Default for AsteroidBundle {
+    fn default() -> Self {
         Self {
-            asteroid: Asteroid::new(&shape),
-            sprite: SpriteBundle {
-                texture: asset_server.load(shape),
-                ..default()
-            },
-            movement: Movement { ..default() },
-            warp: Warp {},
+            asteroid: Asteroid::default(),
+            sprite: SpriteBundle::default(),
+            movement: Movement::default(),
+            warp: Warp,
             collider: Collider {
-                shape: ColliderShape::Circle(24.0),
+                shape: ColliderShape::None,
                 collision_layer: ASTEROID_COLLISION_LAYER,
                 collision_mask: PLAYER_COLLISION_LAYER,
             },
+            angular_velocity: AngularVelocity::default(),
         }
     }
 }

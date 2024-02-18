@@ -1,7 +1,9 @@
 use bevy::prelude::*;
 
 mod bundles;
+mod commands;
 mod components;
+mod constants;
 mod resources;
 mod systems;
 
@@ -19,8 +21,9 @@ impl Plugin for AsteroidPlugin {
         .add_systems(
             Update,
             (
-                /*spawn_asteroid,*/ asteroid_rotate_system,
+                //spawn_asteroid,
                 on_collistion_system,
+                //asteroid_spawned_system,
             ),
         );
     }

@@ -3,6 +3,7 @@ use bevy::prelude::Component;
 #[derive(Debug, Clone, Copy)]
 pub enum ColliderShape {
     Circle(f32),
+    None,
 }
 
 #[derive(Component, Debug)]

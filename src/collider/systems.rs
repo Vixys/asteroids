@@ -34,6 +34,12 @@ pub fn check_collision(
                         });
                     }
                 }
+                (_, ColliderShape::None) => {
+                    warn!("Entity {:?}: Collider has no shape", entities[i])
+                }
+                (ColliderShape::None, _) => {
+                    warn!("Entity {:?}: Collider has no shape", entities[j])
+                }
             }
         }
     }
