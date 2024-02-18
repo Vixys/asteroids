@@ -36,7 +36,6 @@ pub fn check_collision(
         let entity1 = query.get(event.entity1);
         let entity2 = query.get(event.entity2);
 
-        println!("Bullet collision: ");
         if let Ok(entity) = entity1 {
             commands.entity(entity).despawn();
         }

@@ -70,10 +70,16 @@ impl Distribution<AsteroidShape> for Standard {
 impl<'a> From<&'a Asteroid> for AssetPath<'a> {
     fn from(val: &'a Asteroid) -> Self {
         match val.shape {
-            AsteroidShape::Round if val.size >= 48.0 => "asteroids/asteroid_big.png".into(),
-            AsteroidShape::Round if val.size < 48.0 => "asteroids/asteroid_small.png".into(),
-            AsteroidShape::Square if val.size >= 48.0 => "asteroids/asteroid_square_big.png".into(),
-            AsteroidShape::Square if val.size < 48.0 => {
+            AsteroidShape::Round if val.size >= ASTEROID_SWITCH_SIZE => {
+                "asteroids/asteroid_big.png".into()
+            }
+            AsteroidShape::Round if val.size < ASTEROID_SWITCH_SIZE => {
+                "asteroids/asteroid_small.png".into()
+            }
+            AsteroidShape::Square if val.size >= ASTEROID_SWITCH_SIZE => {
+                "asteroids/asteroid_square_big.png".into()
+            }
+            AsteroidShape::Square if val.size < ASTEROID_SWITCH_SIZE => {
                 "asteroids/asteroid_square_small.png".into()
             }
             _ => unreachable!(),

@@ -1,5 +1,4 @@
-use bevy::asset::AssetServer;
-use bevy::prelude::{default, Bundle, Res, SpriteBundle};
+use bevy::prelude::*;
 
 use crate::collider::components::*;
 use crate::constants::{ASTEROID_COLLISION_LAYER, PLAYER_COLLISION_LAYER};

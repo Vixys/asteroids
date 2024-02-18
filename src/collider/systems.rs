@@ -28,6 +28,12 @@ pub fn check_collision(
                         transforms[j].translation.truncate(),
                     );
                     if distance < radius1 + radius2 {
+                        info!(
+                            "##### Collision detected between {:?} and {:?}",
+                            entities[i], entities[j]
+                        );
+                        info!("Distance: {}", distance);
+                        info!("Radius: {} - {}", radius1, radius2,);
                         collision_events.send(CollisionEvent {
                             entity1: entities[i],
                             entity2: entities[j],
