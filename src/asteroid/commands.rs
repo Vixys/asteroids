@@ -1,9 +1,11 @@
 use bevy::{ecs::system::Command, prelude::*};
 use rand::prelude::*;
 
+use crate::helper::*;
 use crate::movement::components::Movement;
 use crate::{collider::components::*, movement::components::AngularVelocity};
 
+use super::components::AsteroidSize;
 use super::{
     bundles::AsteroidBundle,
     components::{Asteroid, AsteroidShape},
@@ -14,24 +16,13 @@ use super::{
 #[derive(Debug)]
 pub struct SpawnAsteroid {
     shape: AsteroidShape,
-    size: f32,
+    size: AsteroidSize,
+    radius: f32,
     velocity_ratio: f32,
     angular_velocity: f32,
     direction: Option<Vec2>,
+    direction_noise: f32,
     position: Option<Vec3>,
-}
-
-impl From<Asteroid> for SpawnAsteroid {
-    fn from(asteroid: Asteroid) -> Self {
-        Self {
-            shape: asteroid.shape,
-            size: asteroid.size,
-            velocity_ratio: 1.0,
-            angular_velocity: 0.0,
-            direction: None,
-            position: None,
-        }
-    }
 }
 
 impl SpawnAsteroid {
@@ -40,8 +31,10 @@ impl SpawnAsteroid {
         self
     }
 
-    pub fn with_size(mut self, size: f32) -> Self {
+    pub fn with_size(mut self, size: AsteroidSize) -> Self {
+        let mut rng = thread_rng();
         self.size = size;
+        self.radius = rng.gen_range(size.get_radius_range());
         self
     }
 
@@ -52,15 +45,15 @@ impl SpawnAsteroid {
 
     pub fn random() -> Self {
         let mut rng = thread_rng();
-        let size_indice =
-            rng.gen_range(*ASTEROID_SIZE_RANGE.start()..=*ASTEROID_SIZE_RANGE.end()) as f32;
+        let size: AsteroidSize = rng.gen();
         Self {
             shape: rng.gen(),
-            size: 2.0_f32.powf(size_indice),
-            velocity_ratio: rng.gen_range(ASTEROID_SPEED_RANGE),
-            angular_velocity: ASTEROID_MAX_ANGULAR_VELOCITY / size_indice
-                + rng.gen_range(ASTEROID_ANGULAR_VELOCITY_RANGE_VARIATION),
+            size,
+            velocity_ratio: rng.gen_range(size.get_speed_range()),
+            angular_velocity: ASTEROID_MAX_ANGULAR_VELOCITY * rng.gen_range(size.get_speed_range()),
+            radius: rng.gen_range(size.get_radius_range()),
             direction: None,
+            direction_noise: rng.gen_range(ASTEROID_DIRECTION_NOISE_RANGE),
             position: None,
         }
     }
@@ -76,7 +69,7 @@ impl Command for SpawnAsteroid {
         let direction = self
             .direction
             .unwrap_or_else(|| (Vec3::ZERO - position).truncate())
-            .normalize();
+            .rotate_2d(self.direction_noise);
         let asteroid = Asteroid {
             shape: self.shape,
             size: self.size,
@@ -86,7 +79,7 @@ impl Command for SpawnAsteroid {
             asteroid,
             sprite: SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::splat(self.size * 2.0)),
+                    custom_size: Some(Vec2::splat(self.radius)),
                     ..default()
                 },
                 texture: asset_server.load(asteroid.clone().get_asset_path()),
@@ -104,7 +97,7 @@ impl Command for SpawnAsteroid {
         };
 
         asteroid_bundle.sprite.transform.translation = position;
-        asteroid_bundle.collider.shape = ColliderShape::Circle(self.size);
+        asteroid_bundle.collider.shape = ColliderShape::Circle(self.radius);
 
         println!("#### ASTEROID SPAWN ####");
         println!("{:?}", asteroid_bundle.movement);

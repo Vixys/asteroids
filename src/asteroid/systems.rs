@@ -4,6 +4,7 @@ use std::f32::consts::*;
 
 use crate::asteroid::constants::*;
 use crate::collider::events::*;
+use crate::helper::Rotate2D;
 use crate::movement::components::Movement;
 
 use super::commands::SpawnAsteroid;
@@ -35,7 +36,7 @@ pub fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWi
     });
 
     for _ in 0..INITIAL_ASTEROID_COUNT {
-        commands.add(SpawnAsteroid::random().with_size(128.0));
+        commands.add(SpawnAsteroid::random().with_size(AsteroidSize::Big));
     }
 }
 
@@ -54,25 +55,15 @@ pub fn on_collistion_system(
         let entity2 = query.get(event.entity2);
 
         if let Ok((entity, asteroid, transform, movement)) = entity2 {
-            if asteroid.size > ASTEROID_SMALLEST_SIZE {
+            if let Some(size) = asteroid.size.shrink() {
                 let new_asteroid = SpawnAsteroid::random()
                     .with_position(transform.translation)
-                    .with_size(asteroid.size / 2.0)
-                    .with_direction(
-                        Quat::from_rotation_z(FRAC_PI_2)
-                            .mul_vec3(movement.velocity.extend(0.0))
-                            .truncate()
-                            .normalize(),
-                    );
+                    .with_size(size)
+                    .with_direction(movement.velocity.rotate_2d(FRAC_PI_2));
                 let new_asteroid2 = SpawnAsteroid::random()
                     .with_position(transform.translation)
-                    .with_size(asteroid.size / 2.0)
-                    .with_direction(
-                        Quat::from_rotation_z(-FRAC_PI_2)
-                            .mul_vec3(movement.velocity.extend(0.0))
-                            .truncate()
-                            .normalize(),
-                    );
+                    .with_size(size)
+                    .with_direction(movement.velocity.rotate_2d(-FRAC_PI_2));
                 println!("#### ASTEROID SPAWN ####");
                 println!("ASTEROID: {:?}", new_asteroid);
                 println!("#### ASTEROID SPAWN ####");

@@ -1,12 +1,10 @@
-use std::ops::Range;
+use std::ops::{Range, RangeInclusive};
 
 use bevy::asset::AssetPath;
 use bevy::math::Vec2;
 use bevy::prelude::Component;
 use rand::distributions::Standard;
 use rand::prelude::*;
-
-use super::constants::*;
 
 #[derive(Component, Debug)]
 pub struct AsteroidSpawnArea {
@@ -18,36 +16,71 @@ pub struct AsteroidSpawnArea {
 #[derive(Component, Debug, Clone, Copy)]
 pub struct Asteroid {
     pub shape: AsteroidShape,
-    pub size: f32,
+    pub size: AsteroidSize,
 }
 
 impl Default for Asteroid {
     fn default() -> Self {
         Self {
             shape: AsteroidShape::Round,
-            size: 2.0_f32.powf((*ASTEROID_SIZE_RANGE.start()) as f32),
+            size: AsteroidSize::Big,
         }
     }
 }
 
 impl Asteroid {
-    pub fn get_angular_velocity(&self) -> f32 {
-        let mut rng = rand::thread_rng();
-        let indice = self.size.log2() / (*ASTEROID_SIZE_RANGE.start()) as f32;
-
-        ASTEROID_MAX_ANGULAR_VELOCITY / indice
-            + rng.gen_range(ASTEROID_ANGULAR_VELOCITY_RANGE_VARIATION)
-    }
-
     pub fn get_asset_path(&self) -> AssetPath {
         self.into()
     }
+}
 
-    pub fn get_scale(&self) -> f32 {
-        if self.size > ASTEROID_SWITCH_SIZE {
-            self.size / ASTEROID_SWITCH_SIZE
-        } else {
-            self.size / 32.0
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum AsteroidSize {
+    Small,
+    Medium,
+    Big,
+}
+
+impl AsteroidSize {
+    pub fn get_speed_range(&self) -> RangeInclusive<f32> {
+        match self {
+            AsteroidSize::Small => 0.75..=1.15,
+            AsteroidSize::Medium => 0.55..=0.85,
+            AsteroidSize::Big => 0.45..=0.65,
+        }
+    }
+
+    pub fn get_angular_speed_range(&self) -> RangeInclusive<f32> {
+        match self {
+            AsteroidSize::Small => 0.75..=1.15,
+            AsteroidSize::Medium => 0.55..=0.85,
+            AsteroidSize::Big => 0.45..=0.65,
+        }
+    }
+
+    pub fn get_radius_range(&self) -> RangeInclusive<f32> {
+        match self {
+            AsteroidSize::Small => 16.0..=32.0,
+            AsteroidSize::Medium => 48.0..=80.0,
+            AsteroidSize::Big => 96.0..=128.0,
+        }
+    }
+
+    pub fn shrink(&self) -> Option<AsteroidSize> {
+        match self {
+            AsteroidSize::Big => Some(AsteroidSize::Medium),
+            AsteroidSize::Medium => Some(AsteroidSize::Small),
+            _ => None,
+        }
+    }
+}
+
+impl Distribution<AsteroidSize> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> AsteroidSize {
+        match rng.gen_range(0..3) {
+            0 => AsteroidSize::Small,
+            1 => AsteroidSize::Medium,
+            _ => AsteroidSize::Big,
         }
     }
 }
@@ -70,16 +103,20 @@ impl Distribution<AsteroidShape> for Standard {
 impl<'a> From<&'a Asteroid> for AssetPath<'a> {
     fn from(val: &'a Asteroid) -> Self {
         match val.shape {
-            AsteroidShape::Round if val.size >= ASTEROID_SWITCH_SIZE => {
+            AsteroidShape::Round
+                if val.size == AsteroidSize::Big || val.size == AsteroidSize::Medium =>
+            {
                 "asteroids/asteroid_big.png".into()
             }
-            AsteroidShape::Round if val.size < ASTEROID_SWITCH_SIZE => {
+            AsteroidShape::Round if val.size == AsteroidSize::Small => {
                 "asteroids/asteroid_small.png".into()
             }
-            AsteroidShape::Square if val.size >= ASTEROID_SWITCH_SIZE => {
+            AsteroidShape::Square
+                if val.size == AsteroidSize::Big || val.size == AsteroidSize::Medium =>
+            {
                 "asteroids/asteroid_square_big.png".into()
             }
-            AsteroidShape::Square if val.size < ASTEROID_SWITCH_SIZE => {
+            AsteroidShape::Square if val.size == AsteroidSize::Small => {
                 "asteroids/asteroid_square_small.png".into()
             }
             _ => unreachable!(),

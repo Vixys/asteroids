@@ -5,6 +5,7 @@ mod asteroid;
 mod bullet;
 mod collider;
 mod constants;
+mod helper;
 mod movement;
 mod player;
 mod warp;
