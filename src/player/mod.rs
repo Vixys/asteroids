@@ -6,6 +6,7 @@ mod events;
 mod systems;
 
 use crate::bullet::BulletPlugin;
+use crate::invincible::InvinciblePlugin;
 use crate::movement::MovementPlugin;
 use crate::warp::WarpPlugin;
 use systems::*;
@@ -19,10 +20,16 @@ impl Plugin for PlayerPlugin {
         app.add_systems(Startup, spawn_player)
             .add_systems(
                 Update,
-                (player_input, on_collistion_system, on_spawn_player_system),
+                (
+                    player_input,
+                    on_collistion_system,
+                    on_spawn_player_system,
+                ),
             )
+            .add_systems(FixedUpdate, on_invincibility_end_system)
             .add_plugins(WarpPlugin)
             .add_plugins(MovementPlugin)
+            .add_plugins(InvinciblePlugin)
             .add_plugins(BulletPlugin)
             .add_event::<SpawnPlayerEvent>();
     }

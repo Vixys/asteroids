@@ -6,6 +6,7 @@ mod bullet;
 mod collider;
 mod constants;
 mod helper;
+mod invincible;
 mod movement;
 mod player;
 mod warp;
@@ -20,7 +21,7 @@ fn main() {
         .add_plugins(PlayerPlugin)
         .add_plugins(AsteroidPlugin)
         .add_plugins(ColliderPlugin)
-        // .add_plugins(WorldInspectorPlugin::new())
+        .add_plugins(WorldInspectorPlugin::new())
         .add_systems(Startup, setup)
         .run();
 }

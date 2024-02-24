@@ -2,13 +2,15 @@ use bevy::prelude::*;
 
 use std::f32::consts::{FRAC_PI_2, PI};
 
-use crate::bullet::bundles::BulletBundle;
-use crate::collider::events::CollisionEvent;
-use crate::movement::components::Movement;
-
 use super::bundles::PlayerBundle;
 use super::components::*;
 use super::events::SpawnPlayerEvent;
+use crate::bullet::bundles::BulletBundle;
+use crate::collider::components::*;
+use crate::collider::events::CollisionEvent;
+use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
+use crate::invincible::events::InvincibleEndEvent;
+use crate::movement::components::Movement;
 
 const PLAYER_ROTATION_SPEED: f32 = PI;
 const PLAYER_SPEED: f32 = 300.0;
@@ -76,5 +78,22 @@ pub fn on_spawn_player_system(
 ) {
     if !spawn_events.is_empty() {
         commands.spawn(PlayerBundle::new(asset_server));
+    }
+}
+
+pub fn on_invincibility_end_system(
+    mut commands: Commands,
+    mut invincibility_end_events: EventReader<InvincibleEndEvent>,
+    query: Query<Entity, (With<Player>, Without<Collider>)>,
+) {
+    for event in invincibility_end_events.read() {
+        if let Ok(entity) = query.get(event.entity) {
+            println!("Add collider to {:?}!", entity);
+            commands.entity(entity).insert(Collider {
+                shape: ColliderShape::Circle(16.0),
+                collision_layer: PLAYER_COLLISION_LAYER,
+                collision_mask: ZERO_COLLISION_LAYER,
+            });
+        }
     }
 }

@@ -2,8 +2,7 @@ use bevy::prelude::*;
 
 const PLAYER_SHIP_ASSET_PATH: &str = "ship_B.png";
 
-use crate::collider::components::*;
-use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
+use crate::invincible::components::Invincible;
 use crate::movement::components::Movement;
 use crate::warp::components::Warp;
 
@@ -15,7 +14,7 @@ pub struct PlayerBundle {
     sprite: SpriteBundle,
     movement: Movement,
     warp: Warp,
-    collider: Collider,
+    invicibility: Invincible,
 }
 
 impl PlayerBundle {
@@ -28,11 +27,7 @@ impl PlayerBundle {
             },
             movement: Movement::default(),
             warp: Warp {},
-            collider: Collider {
-                shape: ColliderShape::Circle(16.0),
-                collision_layer: PLAYER_COLLISION_LAYER,
-                collision_mask: ZERO_COLLISION_LAYER,
-            },
+            invicibility: Invincible::default(),
         }
     }
 }
