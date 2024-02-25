@@ -1,17 +1,17 @@
 use bevy::{ecs::system::Command, prelude::*};
 use rand::prelude::*;
 
+use crate::{collider::components::*, movement::components::AngularVelocity};
 use crate::helper::*;
 use crate::movement::components::Movement;
-use crate::{collider::components::*, movement::components::AngularVelocity};
 
-use super::components::AsteroidSize;
 use super::{
+    AsteroidLineSpawner,
     bundles::AsteroidBundle,
     components::{Asteroid, AsteroidShape},
     constants::*,
-    AsteroidLineSpawner,
 };
+use super::components::AsteroidSize;
 
 #[derive(Debug)]
 pub struct SpawnAsteroid {
@@ -60,7 +60,7 @@ impl SpawnAsteroid {
 }
 
 impl Command for SpawnAsteroid {
-    fn apply(self, world: &mut bevy::prelude::World) {
+    fn apply(self, world: &mut World) {
         let spawn_area = world.get_resource::<AsteroidLineSpawner>().unwrap();
         let asset_server = world.get_resource::<AssetServer>().unwrap();
         let position = self
@@ -79,7 +79,7 @@ impl Command for SpawnAsteroid {
             asteroid,
             sprite: SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::splat(self.radius)),
+                    custom_size: Some(Vec2::splat(self.radius * 2.0)),
                     ..default()
                 },
                 texture: asset_server.load(asteroid.clone().get_asset_path()),
