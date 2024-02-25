@@ -27,7 +27,7 @@ pub fn despawn_out_of_bounds(
     }
 }
 
-pub fn check_collision(
+pub fn on_collision(
     mut commands: Commands,
     mut events: EventReader<CollisionEvent>,
     query: Query<Entity, With<Bullet>>,
@@ -44,4 +44,5 @@ pub fn check_collision(
             commands.entity(entity).despawn();
         }
     }
+    events.clear();
 }

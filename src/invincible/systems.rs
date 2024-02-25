@@ -16,14 +16,3 @@ pub fn fade_invincible(
         }
     }
 }
-
-pub fn invincible_end_system(
-    mut event_reader: EventReader<InvincibleEndEvent>,
-    mut query: Query<&mut Visibility>,
-) {
-    for event in event_reader.read() {
-        if let Ok(mut visibility) = query.get_mut(event.entity) {
-            *visibility = Visibility::Visible;
-        }
-    }
-}

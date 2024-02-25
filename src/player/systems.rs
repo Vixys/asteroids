@@ -72,6 +72,7 @@ pub fn on_collision_system(
             commands.entity(entity).remove::<Collider>();
         }
     }
+    collision_events.clear();
 }
 
 pub fn on_invincibility_end_system(
@@ -90,4 +91,5 @@ pub fn on_invincibility_end_system(
             });
         }
     }
+    invincibility_end_events.clear();
 }

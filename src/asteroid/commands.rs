@@ -99,8 +99,7 @@ impl Command for SpawnAsteroid {
         asteroid_bundle.sprite.transform.translation = position;
         asteroid_bundle.collider.shape = ColliderShape::Circle(self.radius);
 
-        println!("#### ASTEROID SPAWN ####");
-        println!("{:?}", asteroid_bundle.movement);
+        info!("Asteroid Spawn: {:?}", self);
         world.spawn(asteroid_bundle);
     }
 }

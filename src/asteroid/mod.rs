@@ -18,6 +18,6 @@ impl Plugin for AsteroidPlugin {
             timer: Timer::from_seconds(5.0, TimerMode::Repeating),
         })
         .add_systems(Startup, setup)
-        .add_systems(Update, (spawn_asteroid, on_collistion_system));
+        .add_systems(Update, (spawn_asteroid, on_collision_system));
     }
 }

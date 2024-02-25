@@ -1,6 +1,7 @@
+use std::f32::consts::*;
+
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
-use std::f32::consts::*;
 
 use crate::asteroid::constants::*;
 use crate::collider::events::*;
@@ -46,7 +47,7 @@ pub fn spawn_asteroid(mut commands: Commands, time: Res<Time>, mut timer: ResMut
     }
 }
 
-pub fn on_collistion_system(
+pub fn on_collision_system(
     mut commands: Commands,
     mut collision_events: EventReader<CollisionEvent>,
     query: Query<(Entity, &Asteroid, &Transform, &Movement)>,
@@ -64,15 +65,11 @@ pub fn on_collistion_system(
                     .with_position(transform.translation)
                     .with_size(size)
                     .with_direction(movement.velocity.rotate_2d(-FRAC_PI_2));
-                println!("#### ASTEROID SPAWN ####");
-                println!("ASTEROID: {:?}", new_asteroid);
-                println!("#### ASTEROID SPAWN ####");
-                println!("ASTEROID: {:?}", new_asteroid2);
                 commands.add(new_asteroid);
                 commands.add(new_asteroid2);
             }
-            println!("Asteroid collision: ");
             commands.entity(entity).despawn();
         }
     }
+    collision_events.clear();
 }
