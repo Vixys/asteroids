@@ -1,5 +1,5 @@
-use crate::bullet::bundles::BulletBundle;
-use crate::bullet::constants::{BULLET_ASSET_PATH, BULLET_SPEED};
+use crate::in_game::bullet::bundles::BulletBundle;
+use crate::in_game::bullet::constants::{BULLET_ASSET_PATH, BULLET_SPEED};
 use bevy::ecs::system::Command;
 use bevy::prelude::*;
 

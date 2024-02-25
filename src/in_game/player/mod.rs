@@ -2,11 +2,11 @@ use bevy::prelude::*;
 
 use systems::*;
 
-use crate::blink::BlinkPlugin;
-use crate::bullet::BulletPlugin;
-use crate::invincible::InvinciblePlugin;
-use crate::movement::MovementPlugin;
-use crate::warp::WarpPlugin;
+use crate::in_game::blink::BlinkPlugin;
+use crate::in_game::bullet::BulletPlugin;
+use crate::in_game::invincible::InvinciblePlugin;
+use crate::in_game::movement::MovementPlugin;
+use crate::in_game::warp::WarpPlugin;
 
 mod bundles;
 mod commands;

@@ -2,16 +2,16 @@ use std::f32::consts::FRAC_PI_2;
 
 use bevy::prelude::*;
 
-use crate::blink::components::Blink;
-use crate::bullet::commands::SpawnBullet;
-use crate::collider::components::*;
-use crate::collider::events::CollisionEvent;
 use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
-use crate::invincible::components::Invincible;
-use crate::invincible::events::InvincibleEndEvent;
-use crate::movement::components::Movement;
-use crate::player::commands::SpawnPlayer;
-use crate::player::constants::*;
+use crate::in_game::blink::components::Blink;
+use crate::in_game::bullet::commands::SpawnBullet;
+use crate::in_game::collider::components::*;
+use crate::in_game::collider::events::CollisionEvent;
+use crate::in_game::invincible::components::Invincible;
+use crate::in_game::invincible::events::InvincibleEndEvent;
+use crate::in_game::movement::components::Movement;
+use crate::in_game::player::commands::SpawnPlayer;
+use crate::in_game::player::constants::*;
 
 use super::components::*;
 

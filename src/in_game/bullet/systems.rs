@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::collider::events::CollisionEvent;
+use crate::in_game::collider::events::CollisionEvent;
 
 use super::components::Bullet;
 

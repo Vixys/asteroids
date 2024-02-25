@@ -1,9 +1,9 @@
-use crate::blink::components::Blink;
+use crate::in_game::blink::components::Blink;
 use bevy::prelude::*;
 
-use crate::invincible::components::Invincible;
-use crate::movement::components::Movement;
-use crate::warp::components::Warp;
+use crate::in_game::invincible::components::Invincible;
+use crate::in_game::movement::components::Movement;
+use crate::in_game::warp::components::Warp;
 
 use super::components::*;
 

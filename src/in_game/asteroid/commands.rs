@@ -1,17 +1,17 @@
 use bevy::{ecs::system::Command, prelude::*};
 use rand::prelude::*;
 
-use crate::{collider::components::*, movement::components::AngularVelocity};
 use crate::helper::*;
-use crate::movement::components::Movement;
+use crate::in_game::movement::components::Movement;
+use crate::in_game::{collider::components::*, movement::components::AngularVelocity};
 
+use super::components::AsteroidSize;
 use super::{
-    AsteroidLineSpawner,
     bundles::AsteroidBundle,
     components::{Asteroid, AsteroidShape},
     constants::*,
+    AsteroidLineSpawner,
 };
-use super::components::AsteroidSize;
 
 #[derive(Debug)]
 pub struct SpawnAsteroid {

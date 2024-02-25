@@ -1,4 +1,4 @@
-use crate::blink::systems::*;
+use crate::in_game::blink::systems::*;
 use bevy::prelude::*;
 
 pub mod components;

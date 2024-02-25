@@ -3,10 +3,10 @@ use std::f32::consts::*;
 use bevy::prelude::*;
 use bevy::window::PrimaryWindow;
 
-use crate::asteroid::constants::*;
-use crate::collider::events::*;
 use crate::helper::Rotate2D;
-use crate::movement::components::Movement;
+use crate::in_game::asteroid::constants::*;
+use crate::in_game::collider::events::*;
+use crate::in_game::movement::components::Movement;
 
 use super::commands::SpawnAsteroid;
 use super::components::*;

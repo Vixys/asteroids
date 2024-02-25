@@ -1,32 +1,22 @@
 use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
-mod asteroid;
-mod blink;
-mod bullet;
-mod collider;
 mod constants;
+mod game_state;
 mod helper;
-mod invincible;
-mod movement;
-mod player;
-mod warp;
+mod in_game;
+mod systems;
 
-use asteroid::AsteroidPlugin;
-use collider::ColliderPlugin;
-use player::PlayerPlugin;
+use game_state::GameState;
+use in_game::InGamePlugin;
+use systems::setup;
 
 fn main() {
     App::new()
+        .init_state::<GameState>()
         .add_plugins(DefaultPlugins)
-        .add_plugins(PlayerPlugin)
-        .add_plugins(AsteroidPlugin)
-        .add_plugins(ColliderPlugin)
+        .add_plugins(InGamePlugin)
         .add_plugins(WorldInspectorPlugin::new())
         .add_systems(Startup, setup)
         .run();
-}
-
-fn setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
 }
