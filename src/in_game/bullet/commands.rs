@@ -1,5 +1,6 @@
 use crate::in_game::bullet::bundles::BulletBundle;
 use crate::in_game::bullet::constants::{BULLET_ASSET_PATH, BULLET_SPEED};
+use crate::in_game::components::OnInGameScreen;
 use bevy::ecs::system::Command;
 use bevy::prelude::*;
 
@@ -23,6 +24,6 @@ impl Command for SpawnBullet {
             .normalize()
             * BULLET_SPEED;
 
-        world.spawn(bullet);
+        world.spawn((bullet, OnInGameScreen));
     }
 }

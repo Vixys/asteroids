@@ -1,3 +1,4 @@
+use crate::in_game::components::OnInGameScreen;
 use bevy::{ecs::system::Command, prelude::*};
 
 use super::bundles::PlayerBundle;
@@ -25,6 +26,6 @@ impl Command for SpawnPlayer {
         player.sprite.transform.translation = self.position;
         player.sprite.texture = asset_server.load(PLAYER_SHIP_ASSET_PATH);
 
-        world.spawn(player);
+        world.spawn((player, OnInGameScreen));
     }
 }

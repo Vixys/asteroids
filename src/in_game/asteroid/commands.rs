@@ -2,6 +2,7 @@ use bevy::{ecs::system::Command, prelude::*};
 use rand::prelude::*;
 
 use crate::helper::*;
+use crate::in_game::components::OnInGameScreen;
 use crate::in_game::movement::components::Movement;
 use crate::in_game::{collider::components::*, movement::components::AngularVelocity};
 
@@ -100,6 +101,6 @@ impl Command for SpawnAsteroid {
         asteroid_bundle.collider.shape = ColliderShape::Circle(self.radius);
 
         info!("Asteroid Spawn: {:?}", self);
-        world.spawn(asteroid_bundle);
+        world.spawn((asteroid_bundle, OnInGameScreen));
     }
 }

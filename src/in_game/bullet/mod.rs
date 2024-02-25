@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+use crate::game_state::GameState;
 use systems::*;
 
 pub mod bundles;
@@ -12,6 +13,12 @@ pub struct BulletPlugin;
 
 impl Plugin for BulletPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, (on_collision, despawn_out_of_bounds));
+        app.add_systems(
+            Update,
+            (
+                on_collision.run_if(in_state(GameState::InGame)),
+                despawn_out_of_bounds.run_if(in_state(GameState::InGame)),
+            ),
+        );
     }
 }
