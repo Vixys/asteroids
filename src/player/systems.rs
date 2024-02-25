@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use std::f32::consts::FRAC_PI_2;
 use super::components::*;
+use crate::blink::components::Blink;
 use crate::bullet::bundles::BulletBundle;
 use crate::collider::components::*;
 use crate::collider::events::CollisionEvent;
@@ -10,6 +10,7 @@ use crate::invincible::events::InvincibleEndEvent;
 use crate::movement::components::Movement;
 use crate::player::commands::SpawnPlayer;
 use crate::player::constants::*;
+use std::f32::consts::FRAC_PI_2;
 
 pub fn spawn_player(mut commands: Commands) {
     commands.add(SpawnPlayer::default())
@@ -69,11 +70,12 @@ pub fn on_collision_system(
 pub fn on_invincibility_end_system(
     mut commands: Commands,
     mut invincibility_end_events: EventReader<InvincibleEndEvent>,
-    query: Query<(Entity, &Visibility), (With<Player>, Without<Collider>)>,
+    query: Query<Entity, (With<Player>, Without<Collider>)>,
 ) {
     for event in invincibility_end_events.read() {
-        if let Ok((entity, visibilty)) = query.get(event.entity) {
+        if let Ok(entity) = query.get(event.entity) {
             info!("Add collider to {:?}!", entity);
+            commands.entity(entity).remove::<Blink>();
             commands.entity(entity).insert(Collider {
                 shape: ColliderShape::Circle(16.0),
                 collision_layer: PLAYER_COLLISION_LAYER,

@@ -12,10 +12,7 @@ pub struct InvinciblePlugin;
 
 impl Plugin for InvinciblePlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            FixedUpdate,
-            (fade_invincible, blink_invincible, invincible_end_system),
-        )
-        .add_event::<InvincibleEndEvent>();
+        app.add_systems(FixedUpdate, (fade_invincible, invincible_end_system))
+            .add_event::<InvincibleEndEvent>();
     }
 }

@@ -1,3 +1,4 @@
+use crate::blink::components::Blink;
 use bevy::prelude::*;
 
 use crate::invincible::components::Invincible;
@@ -13,6 +14,7 @@ pub struct PlayerBundle {
     pub movement: Movement,
     pub warp: Warp,
     pub invincible: Invincible,
+    pub blink: Blink,
 }
 
 impl Default for PlayerBundle {
@@ -23,6 +25,7 @@ impl Default for PlayerBundle {
             movement: Movement::default(),
             warp: Warp {},
             invincible: Invincible::default(),
+            blink: Blink::default(),
         }
     }
 }

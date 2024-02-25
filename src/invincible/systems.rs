@@ -17,17 +17,6 @@ pub fn fade_invincible(
     }
 }
 
-pub fn blink_invincible(mut query: Query<(&mut Invincible, &mut Visibility)>, time: Res<Time>) {
-    for (mut invicibility, mut visible) in query.iter_mut() {
-        if invicibility.blink_timer.tick(time.delta()).just_finished() {
-            *visible = match *visible {
-                Visibility::Hidden => Visibility::Inherited,
-                _ => Visibility::Hidden,
-            };
-        }
-    }
-}
-
 pub fn invincible_end_system(
     mut event_reader: EventReader<InvincibleEndEvent>,
     mut query: Query<&mut Visibility>,

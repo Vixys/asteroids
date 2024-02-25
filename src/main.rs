@@ -2,6 +2,7 @@ use bevy::prelude::*;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 mod asteroid;
+mod blink;
 mod bullet;
 mod collider;
 mod constants;
