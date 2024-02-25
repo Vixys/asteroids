@@ -60,9 +60,9 @@ impl AsteroidSize {
 
     pub fn get_radius_range(&self) -> RangeInclusive<f32> {
         match self {
-            AsteroidSize::Small => 8.0..=16.0,
-            AsteroidSize::Medium => 24.0..=40.0,
-            AsteroidSize::Big => 48.0..=64.0,
+            AsteroidSize::Small => 16.0..=24.0,
+            AsteroidSize::Medium => 32.0..=48.0,
+            AsteroidSize::Big => 64.0..=98.0,
         }
     }
 

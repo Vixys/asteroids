@@ -3,7 +3,7 @@ use std::f32::consts::FRAC_PI_2;
 use bevy::prelude::*;
 
 use crate::blink::components::Blink;
-use crate::bullet::bundles::BulletBundle;
+use crate::bullet::commands::SpawnBullet;
 use crate::collider::components::*;
 use crate::collider::events::CollisionEvent;
 use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
@@ -21,7 +21,6 @@ pub fn spawn_player(mut commands: Commands) {
 
 pub fn player_input(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     mut query: Query<(&mut Movement, &mut Transform), With<Player>>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
@@ -48,9 +47,10 @@ pub fn player_input(
         }
 
         if keyboard_input.just_pressed(KeyCode::Space) {
-            let bullet = BulletBundle::new(&player_transform, &asset_server);
             info!("Bullet spawned");
-            commands.spawn(bullet);
+            commands.add(SpawnBullet {
+                transform: player_transform.clone(),
+            });
         }
     }
 }

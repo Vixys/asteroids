@@ -3,7 +3,9 @@ use bevy::prelude::*;
 use systems::*;
 
 pub mod bundles;
+pub mod commands;
 mod components;
+mod constants;
 mod systems;
 
 pub struct BulletPlugin;

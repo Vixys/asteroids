@@ -1,3 +1,4 @@
+use crate::bullet::constants::*;
 use bevy::prelude::*;
 
 use crate::collider::components::*;
@@ -5,9 +6,6 @@ use crate::constants::*;
 use crate::movement::components::Movement;
 
 use super::components::Bullet;
-
-const BULLET_ASSET_PATH: &str = "bullets/bullet.png";
-const BULLET_SPEED: f32 = 500.0;
 
 #[derive(Bundle)]
 pub struct BulletBundle {
@@ -17,22 +15,23 @@ pub struct BulletBundle {
     pub collider: Collider,
 }
 
-impl BulletBundle {
-    pub fn new(transform: &Transform, asset_server: &Res<AssetServer>) -> Self {
+impl Default for BulletBundle {
+    fn default() -> Self {
         Self {
             bullet: Bullet {},
             sprite: SpriteBundle {
-                texture: asset_server.load(BULLET_ASSET_PATH),
-                transform: *transform,
+                sprite: Sprite {
+                    custom_size: Option::from(BULLET_SIZE),
+                    ..default()
+                },
                 ..default()
             },
             movement: Movement {
-                velocity: transform.rotation.mul_vec3(Vec3::Y).truncate().normalize()
-                    * BULLET_SPEED,
+                velocity: Vec2::ZERO,
                 max_velocity: BULLET_SPEED,
             },
             collider: Collider {
-                shape: ColliderShape::Circle(32.0),
+                shape: ColliderShape::Circle(BULLET_SIZE.x),
                 collision_layer: BULLET_COLLISION_LAYER,
                 collision_mask: ASTEROID_COLLISION_LAYER,
             },
