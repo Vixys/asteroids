@@ -3,6 +3,7 @@ use bevy::prelude::*;
 
 use crate::in_game::invincible::components::Invincible;
 use crate::in_game::movement::components::Movement;
+use crate::in_game::player::constants::PLAYER_START_LIVES;
 use crate::in_game::warp::components::Warp;
 
 use super::components::*;
@@ -15,6 +16,7 @@ pub struct PlayerBundle {
     pub warp: Warp,
     pub invincible: Invincible,
     pub blink: Blink,
+    pub lives: PlayerLives,
 }
 
 impl Default for PlayerBundle {
@@ -26,6 +28,7 @@ impl Default for PlayerBundle {
             warp: Warp {},
             invincible: Invincible::default(),
             blink: Blink::default(),
+            lives: PlayerLives(PLAYER_START_LIVES),
         }
     }
 }

@@ -3,6 +3,7 @@ use std::f32::consts::FRAC_PI_2;
 use bevy::prelude::*;
 
 use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
+use crate::game_state::GameState;
 use crate::in_game::blink::components::Blink;
 use crate::in_game::bullet::commands::SpawnBullet;
 use crate::in_game::collider::components::*;
@@ -58,18 +59,25 @@ pub fn player_input(
 pub fn on_collision_system(
     mut commands: Commands,
     mut collision_events: EventReader<CollisionEvent>,
-    mut query: Query<(Entity, &mut Transform, &mut Movement), With<Player>>,
+    mut query: Query<(Entity, &mut Transform, &mut Movement, &mut PlayerLives), With<Player>>,
+    mut next_state: ResMut<NextState<GameState>>,
 ) {
     for event in collision_events.read() {
         let entity2 = query.get_mut(event.entity2);
 
-        if let Ok((entity, mut transform, mut movement)) = entity2 {
-            transform.translation = Vec3::ZERO;
-            transform.rotation = Quat::from_rotation_z(0.0);
-            movement.velocity = Vec2::ZERO;
-            commands.entity(entity).insert(Invincible::default());
-            commands.entity(entity).insert(Blink::default());
-            commands.entity(entity).remove::<Collider>();
+        if let Ok((entity, mut transform, mut movement, mut lives)) = entity2 {
+            lives.0 -= 1;
+            if lives.0 == 0 {
+                commands.entity(entity).despawn();
+                next_state.set(GameState::Menu);
+            } else {
+                transform.translation = Vec3::ZERO;
+                transform.rotation = Quat::from_rotation_z(0.0);
+                movement.velocity = Vec2::ZERO;
+                commands.entity(entity).insert(Invincible::default());
+                commands.entity(entity).insert(Blink::default());
+                commands.entity(entity).remove::<Collider>();
+            }
         }
     }
     collision_events.clear();

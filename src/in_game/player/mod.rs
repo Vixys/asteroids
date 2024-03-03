@@ -25,11 +25,8 @@ impl Plugin for PlayerPlugin {
                 (
                     player_input.run_if(in_state(GameState::InGame)),
                     on_collision_system.run_if(in_state(GameState::InGame)),
+                    on_invincibility_end_system.run_if(in_state(GameState::InGame)),
                 ),
-            )
-            .add_systems(
-                FixedUpdate,
-                on_invincibility_end_system.run_if(in_state(GameState::InGame)),
             )
             .add_plugins(WarpPlugin)
             .add_plugins(MovementPlugin)
