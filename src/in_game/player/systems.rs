@@ -50,7 +50,7 @@ pub fn player_input(
         if keyboard_input.just_pressed(KeyCode::Space) {
             info!("Bullet spawned");
             commands.add(SpawnBullet {
-                transform: player_transform.clone(),
+                transform: *player_transform,
             });
         }
     }
@@ -69,7 +69,7 @@ pub fn on_collision_system(
             lives.0 -= 1;
             if lives.0 == 0 {
                 commands.entity(entity).despawn();
-                next_state.set(GameState::Menu);
+                next_state.set(GameState::GameOver);
             } else {
                 transform.translation = Vec3::ZERO;
                 transform.rotation = Quat::from_rotation_z(0.0);

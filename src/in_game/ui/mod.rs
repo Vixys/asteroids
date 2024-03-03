@@ -3,7 +3,6 @@ use bevy::prelude::*;
 use crate::game_state::GameState;
 use crate::in_game::ui::systems::*;
 
-mod commands;
 mod components;
 mod systems;
 

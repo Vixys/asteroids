@@ -226,6 +226,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "asteroids"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "bevy-inspector-egui",
+ "rand",
+]
+
+[[package]]
 name = "async-broadcast"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -320,9 +329,9 @@ dependencies = [
 
 [[package]]
 name = "bevy-inspector-egui"
-version = "0.23.2"
+version = "0.23.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9cf0713a3456f6533d274a4ff6a124fc7ec5de89b9dac25c7eca73c9799badcc"
+checksum = "972b5890423104b81901102fd8c53d56df56a3c9b1bad5e818122119b6b6b66c"
 dependencies = [
  "bevy-inspector-egui-derive",
  "bevy_app",
@@ -3501,15 +3510,6 @@ dependencies = [
  "indexmap",
  "toml_datetime",
  "winnow",
-]
-
-[[package]]
-name = "top-down-shooter-poc"
-version = "0.1.0"
-dependencies = [
- "bevy",
- "bevy-inspector-egui",
- "rand",
 ]
 
 [[package]]
