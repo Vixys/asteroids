@@ -12,6 +12,7 @@ mod components;
 mod invincible;
 mod movement;
 pub mod player;
+mod ui;
 mod warp;
 
 pub struct InGamePlugin;
@@ -21,6 +22,7 @@ impl Plugin for InGamePlugin {
         app.add_plugins(asteroid::AsteroidPlugin)
             .add_plugins(collider::ColliderPlugin)
             .add_plugins(player::PlayerPlugin)
+            .add_plugins(ui::UiPlugin)
             .add_systems(OnExit(GameState::InGame), despawn_all::<OnInGameScreen>);
     }
 }

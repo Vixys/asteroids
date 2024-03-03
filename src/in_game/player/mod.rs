@@ -11,8 +11,8 @@ use crate::in_game::warp::WarpPlugin;
 
 mod bundles;
 mod commands;
-mod components;
-mod constants;
+pub mod components;
+pub mod constants;
 mod systems;
 
 pub struct PlayerPlugin;
