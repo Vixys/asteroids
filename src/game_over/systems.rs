@@ -1,4 +1,4 @@
-use crate::common::ui::button::UiButtonElements;
+use crate::common::ui::button::{ButtonAction, UiButtonElements};
 use crate::constants::MAIN_FONT;
 use crate::game_over::components::OnGameOverScreen;
 use bevy::prelude::*;
@@ -58,8 +58,8 @@ pub fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
                             ..Default::default()
                         })
                         .with_children(|parent| {
-                            parent.add_button("Restart", font.clone());
-                            parent.add_button("Back to menu", font.clone());
+                            parent.add_button("Restart", font.clone(), ButtonAction::ToInGame);
+                            parent.add_button("Back to menu", font.clone(), ButtonAction::ToMenu);
                         });
                 });
         });

@@ -1,4 +1,4 @@
-use crate::common::ui::button::UiButtonElements;
+use crate::common::ui::button::{ButtonAction, UiButtonElements};
 use crate::constants::MAIN_FONT;
 use crate::menu::components::OnMenuScreen;
 use bevy::prelude::*;
@@ -29,6 +29,6 @@ pub fn setup_menu_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
                     color: Color::WHITE,
                 },
             ));
-            parent.add_button("Play", font.clone());
+            parent.add_button("Play", font.clone(), ButtonAction::ToInGame);
         });
 }
