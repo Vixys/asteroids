@@ -22,11 +22,11 @@ pub fn spawn_player(mut commands: Commands) {
 
 pub fn player_input(
     mut commands: Commands,
-    mut query: Query<(&mut Movement, &mut Transform), With<Player>>,
+    mut query: Query<(&mut Movement, &mut Transform, &mut Player)>,
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
 ) {
-    for (mut movement, mut player_transform) in query.iter_mut() {
+    for (mut movement, mut player_transform, mut player) in query.iter_mut() {
         if keyboard_input.pressed(KeyCode::ArrowLeft) {
             player_transform.rotate_z(PLAYER_ROTATION_SPEED * time.delta_seconds());
         }
@@ -46,12 +46,14 @@ pub fn player_input(
                     .normalize();
             movement.velocity += direction * PLAYER_SPEED * time.delta_seconds();
         }
-
-        if keyboard_input.just_pressed(KeyCode::Space) {
+        if player.fire_cooldown.tick(time.delta()).finished()
+            && keyboard_input.just_pressed(KeyCode::Space)
+        {
             info!("Bullet spawned");
             commands.add(SpawnBullet {
                 transform: *player_transform,
             });
+            player.fire_cooldown.reset();
         }
     }
 }

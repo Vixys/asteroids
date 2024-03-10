@@ -22,7 +22,9 @@ pub struct PlayerBundle {
 impl Default for PlayerBundle {
     fn default() -> Self {
         Self {
-            player: Player,
+            player: Player {
+                fire_cooldown: Timer::from_seconds(0.2, TimerMode::Once),
+            },
             sprite: SpriteBundle::default(),
             movement: Movement::default(),
             warp: Warp {},

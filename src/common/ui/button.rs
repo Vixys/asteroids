@@ -22,7 +22,7 @@ impl UiButtonElements for ChildBuilder<'_> {
                 style: Style {
                     min_height: Val::Px(75.0),
                     min_width: Val::Px(250.0),
-                    padding: UiRect::horizontal(Val::Px(15.0)),
+                    padding: UiRect::horizontal(Val::Px(5.0)),
                     border: UiRect::all(Val::Px(5.0)),
                     justify_content: JustifyContent::Center,
                     align_items: AlignItems::Center,
