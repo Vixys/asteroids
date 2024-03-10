@@ -8,8 +8,10 @@ mod game_state;
 mod helper;
 mod in_game;
 mod menu;
+mod splash_screen;
 mod systems;
 
+use crate::splash_screen::SplashScreenPlugin;
 use common::CommonPlugin;
 use game_over::GameOverPlugin;
 use game_state::GameState;
@@ -23,6 +25,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugins(CommonPlugin)
         .add_plugins(GameOverPlugin)
+        .add_plugins(SplashScreenPlugin)
         .add_plugins(MenuPlugin)
         .add_plugins(InGamePlugin)
         .add_plugins(WorldInspectorPlugin::new())
