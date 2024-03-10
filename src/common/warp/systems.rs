@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::in_game::movement::components::Movement;
+use crate::common::movement::components::Movement;
 
 use super::components::*;
 

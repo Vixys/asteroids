@@ -1,9 +1,9 @@
 use crate::in_game::bullet::constants::*;
 use bevy::prelude::*;
 
+use crate::common::movement::components::Movement;
 use crate::constants::*;
 use crate::in_game::collider::components::*;
-use crate::in_game::movement::components::Movement;
 
 use super::components::Bullet;
 

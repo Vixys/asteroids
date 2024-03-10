@@ -1,10 +1,10 @@
 use bevy::{ecs::system::Command, prelude::*};
 use rand::prelude::*;
 
+use crate::common::movement::components::*;
 use crate::helper::*;
+use crate::in_game::collider::components::*;
 use crate::in_game::components::OnInGameScreen;
-use crate::in_game::movement::components::Movement;
-use crate::in_game::{collider::components::*, movement::components::AngularVelocity};
 
 use super::components::AsteroidSize;
 use super::{

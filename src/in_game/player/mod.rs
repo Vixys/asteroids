@@ -6,8 +6,6 @@ use systems::*;
 use crate::in_game::blink::BlinkPlugin;
 use crate::in_game::bullet::BulletPlugin;
 use crate::in_game::invincible::InvinciblePlugin;
-use crate::in_game::movement::MovementPlugin;
-use crate::in_game::warp::WarpPlugin;
 
 mod bundles;
 mod commands;
@@ -28,8 +26,6 @@ impl Plugin for PlayerPlugin {
                     on_invincibility_end_system.run_if(in_state(GameState::InGame)),
                 ),
             )
-            .add_plugins(WarpPlugin)
-            .add_plugins(MovementPlugin)
             .add_plugins(InvinciblePlugin)
             .add_plugins(BlinkPlugin)
             .add_plugins(BulletPlugin);

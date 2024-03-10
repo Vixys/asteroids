@@ -1,10 +1,10 @@
 use crate::in_game::blink::components::Blink;
 use bevy::prelude::*;
 
+use crate::common::movement::components::Movement;
+use crate::common::warp::components::Warp;
 use crate::in_game::invincible::components::Invincible;
-use crate::in_game::movement::components::Movement;
 use crate::in_game::player::constants::PLAYER_START_LIVES;
-use crate::in_game::warp::components::Warp;
 
 use super::components::*;
 

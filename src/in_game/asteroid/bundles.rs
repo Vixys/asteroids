@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 
+use crate::common::movement::components::*;
+use crate::common::warp::components::Warp;
 use crate::constants::{ASTEROID_COLLISION_LAYER, PLAYER_COLLISION_LAYER};
 use crate::in_game::collider::components::*;
-use crate::in_game::movement::components::*;
-use crate::in_game::warp::components::Warp;
 
 use super::components::*;
 

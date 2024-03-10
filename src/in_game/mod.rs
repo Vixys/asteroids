@@ -10,10 +10,8 @@ mod bullet;
 pub mod collider;
 mod components;
 mod invincible;
-mod movement;
 pub mod player;
 mod ui;
-mod warp;
 
 pub struct InGamePlugin;
 

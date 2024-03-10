@@ -2,6 +2,7 @@ use std::f32::consts::FRAC_PI_2;
 
 use bevy::prelude::*;
 
+use crate::common::movement::components::Movement;
 use crate::constants::{PLAYER_COLLISION_LAYER, ZERO_COLLISION_LAYER};
 use crate::game_state::GameState;
 use crate::in_game::blink::components::Blink;
@@ -10,7 +11,6 @@ use crate::in_game::collider::components::*;
 use crate::in_game::collider::events::CollisionEvent;
 use crate::in_game::invincible::components::Invincible;
 use crate::in_game::invincible::events::InvincibleEndEvent;
-use crate::in_game::movement::components::Movement;
 use crate::in_game::player::commands::SpawnPlayer;
 use crate::in_game::player::constants::*;
 
