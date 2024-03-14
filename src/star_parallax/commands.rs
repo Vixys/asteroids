@@ -1,37 +1,38 @@
 use bevy::{ecs::system::Command, prelude::*};
 
+use crate::common::{movement::components::Movement, warp::components::Warp};
+
+const STAR_ASSET_PATH: &str = "stars/star_small.png";
+const STAR_MAX_SIZE: f32 = 6.0;
+
 #[derive(Debug)]
-pub struct SpawnStars {
-    number: u32,
-    direction: Vec2,
+pub struct SpawnStar {
+    pub position: Vec3,
+    pub layer: f32,
 }
 
-impl Command for SpawnStars {
+impl Command for SpawnStar {
     fn apply(self, world: &mut World) {
-        let mut rng = thread_rng();
-        world.
-        let position = Vec3::new(
-            rng.gen_range(-1000.0..1000.0),
-            rng.gen_range(-1000.0..1000.0),
-            0.0,
-        );
-        let velocity = self.direction * rng.gen_range(100.0..300.0);
-        let color = Color::rgb(
-            rng.gen_range(0.0..1.0),
-            rng.gen_range(0.0..1.0),
-            rng.gen_range(0.0..1.0),
-        );
-        world
-            .spawn()
-            .insert_bundle(SpriteBundle {
-                material: color.into(),
-                transform: Transform::from_translation(position),
-                sprite: Sprite::new(Vec2::new(5.0, 5.0)),
-                ..Default::default()
-            })
-            .insert(Movement {
-                max_velocity: 300.0,
-                velocity: velocity,
-            });
+        let asset_server = world.get_resource::<AssetServer>().unwrap();
+
+        world.spawn((
+            SpriteBundle {
+                sprite: Sprite {
+                    custom_size: Some(Vec2::new(
+                        STAR_MAX_SIZE / self.layer,
+                        STAR_MAX_SIZE / self.layer,
+                    )),
+                    ..default()
+                },
+                texture: asset_server.load(STAR_ASSET_PATH),
+                transform: Transform::from_translation(self.position),
+                ..default()
+            },
+            Warp,
+            Movement {
+                velocity: -Vec2::X * 25.0 / self.layer,
+                ..default()
+            },
+        ));
     }
 }

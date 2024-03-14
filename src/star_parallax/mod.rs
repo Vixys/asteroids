@@ -2,6 +2,7 @@ use crate::game_state::GameState;
 use crate::star_parallax::systems::setup;
 use bevy::prelude::*;
 
+mod commands;
 mod components;
 mod systems;
 
