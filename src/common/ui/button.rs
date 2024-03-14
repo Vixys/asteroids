@@ -3,7 +3,7 @@ use bevy::prelude::*;
 
 const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
 const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
-const PRESSED_BUTTON: Color = Color::rgb(0.35, 0.75, 0.35);
+const PRESSED_BUTTON: Color = Color::rgb(0.5, 0.5, 0.5);
 
 pub trait UiButtonElements {
     fn add_button(&mut self, text: &str, font: Handle<Font>, action: ButtonAction);
@@ -63,7 +63,7 @@ pub fn button_system(
         match *interaction {
             Interaction::Pressed => {
                 *color = PRESSED_BUTTON.into();
-                border_color.0 = Color::RED;
+                border_color.0 = Color::WHITE;
                 match action {
                     ButtonAction::ToInGame => next_state.set(GameState::InGame),
                     ButtonAction::ToMenu => next_state.set(GameState::Menu),
