@@ -68,6 +68,8 @@ pub fn on_collision_system(
         let entity2 = query.get_mut(event.entity2);
 
         if let Ok((entity, mut transform, mut movement, mut lives)) = entity2 {
+            // TODO: It can happend that lives is 0, so we should check for that
+            // Otherwise it leads to panic: attempt to subtract with overflow
             lives.0 -= 1;
             if lives.0 == 0 {
                 commands.entity(entity).despawn();

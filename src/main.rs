@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+#[cfg(not(target_family = "wasm"))]
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 mod common;
@@ -22,8 +23,8 @@ use star_parallax::StarParallaxPlugin;
 use systems::setup;
 
 fn main() {
-    App::new()
-        .init_state::<GameState>()
+    let mut app = App::new();
+    app.init_state::<GameState>()
         .insert_resource(ClearColor(Color::rgb_u8(1, 11, 25)))
         .add_plugins(DefaultPlugins)
         .add_plugins(CommonPlugin)
@@ -31,8 +32,10 @@ fn main() {
         .add_plugins(SplashScreenPlugin)
         .add_plugins(MenuPlugin)
         .add_plugins(StarParallaxPlugin)
-        .add_plugins(InGamePlugin)
-        .add_plugins(WorldInspectorPlugin::new())
         .add_systems(Startup, setup)
-        .run();
+        .add_plugins(InGamePlugin);
+    #[cfg(not(target_family = "wasm"))]
+    app.add_plugins(WorldInspectorPlugin::new());
+
+    app.run();
 }
