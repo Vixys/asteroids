@@ -10,6 +10,7 @@ mod bullet;
 pub mod collider;
 mod components;
 mod invincible;
+mod level;
 pub mod player;
 mod ui;
 
@@ -21,6 +22,7 @@ impl Plugin for InGamePlugin {
             .add_plugins(collider::ColliderPlugin)
             .add_plugins(player::PlayerPlugin)
             .add_plugins(ui::UiPlugin)
+            .add_plugins(level::LevelPlugin)
             .add_systems(OnExit(GameState::InGame), despawn_all::<OnInGameScreen>);
     }
 }

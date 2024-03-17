@@ -20,6 +20,7 @@ pub struct SpawnAsteroid {
     size: AsteroidSize,
     radius: f32,
     velocity_ratio: f32,
+    max_speed: f32,
     angular_velocity: f32,
     direction: Option<Vec2>,
     direction_noise: f32,
@@ -29,6 +30,11 @@ pub struct SpawnAsteroid {
 impl SpawnAsteroid {
     pub fn with_position(mut self, position: Vec3) -> Self {
         self.position = Some(position);
+        self
+    }
+
+    pub fn with_max_speed(mut self, max_speed: f32) -> Self {
+        self.max_speed = max_speed;
         self
     }
 
@@ -53,6 +59,7 @@ impl SpawnAsteroid {
             velocity_ratio: rng.gen_range(size.get_speed_range()),
             angular_velocity: ASTEROID_MAX_ANGULAR_VELOCITY * rng.gen_range(size.get_speed_range()),
             radius: rng.gen_range(size.get_radius_range()),
+            max_speed: ASTEROID_MAX_SPEED,
             direction: None,
             direction_noise: rng.gen_range(ASTEROID_DIRECTION_NOISE_RANGE),
             position: None,
@@ -87,7 +94,7 @@ impl Command for SpawnAsteroid {
                 ..default()
             },
             movement: Movement {
-                velocity: direction * self.velocity_ratio * ASTEROID_MAX_SPEED,
+                velocity: direction * self.velocity_ratio * self.max_speed,
                 ..default()
             },
             angular_velocity: AngularVelocity {

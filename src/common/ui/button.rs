@@ -5,7 +5,7 @@ const NORMAL_BUTTON: Color = Color::rgb(0.15, 0.15, 0.15);
 const HOVERED_BUTTON: Color = Color::rgb(0.25, 0.25, 0.25);
 const PRESSED_BUTTON: Color = Color::rgb(0.5, 0.5, 0.5);
 
-pub trait UiButtonElements {
+pub trait UiButtonElement {
     fn add_button(&mut self, text: &str, font: Handle<Font>, action: ButtonAction);
 }
 
@@ -15,7 +15,7 @@ pub enum ButtonAction {
     ToMenu,
 }
 
-impl UiButtonElements for ChildBuilder<'_> {
+impl UiButtonElement for ChildBuilder<'_> {
     fn add_button(&mut self, text: &str, font: Handle<Font>, action: ButtonAction) {
         self.spawn((
             ButtonBundle {

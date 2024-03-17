@@ -35,16 +35,6 @@ pub fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWi
             ),
         ],
     });
-
-    for _ in 0..INITIAL_ASTEROID_COUNT {
-        commands.add(SpawnAsteroid::random().with_size(AsteroidSize::Big));
-    }
-}
-
-pub fn spawn_asteroid(mut commands: Commands, time: Res<Time>, mut timer: ResMut<AsteroidSpawner>) {
-    if timer.timer.tick(time.delta()).just_finished() {
-        commands.add(SpawnAsteroid::random());
-    }
 }
 
 pub fn on_collision_system(

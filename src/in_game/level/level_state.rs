@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
-pub enum GameState {
-    SplashScreen,
-    Menu,
+pub enum LevelState {
     #[default]
-    InGame,
-    GameOver,
+    Init,
+    Start,
+    InProgress,
+    End,
 }

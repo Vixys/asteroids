@@ -1,4 +1,5 @@
 pub mod button;
+pub mod message;
 
 use crate::common::ui::button::button_system;
 use bevy::prelude::*;

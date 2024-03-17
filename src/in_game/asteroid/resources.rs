@@ -1,11 +1,6 @@
 use bevy::prelude::*;
 use rand::Rng;
 
-#[derive(Resource)]
-pub struct AsteroidSpawner {
-    pub timer: Timer,
-}
-
 #[derive(Resource, Debug)]
 pub struct AsteroidLineSpawner {
     pub points: Vec<Vec2>,

@@ -1,4 +1,4 @@
-use crate::common::ui::button::{ButtonAction, UiButtonElements};
+use crate::common::ui::button::{ButtonAction, UiButtonElement};
 use crate::constants::MAIN_FONT;
 use crate::menu::components::OnMenuScreen;
 use bevy::prelude::*;
