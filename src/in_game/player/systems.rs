@@ -20,12 +20,7 @@ pub fn spawn_player(mut commands: Commands) {
     commands.add(SpawnPlayer::default())
 }
 
-pub fn player_input(
-    mut commands: Commands,
-    mut query: Query<(&mut Movement, &mut Transform, &mut Player)>,
-    keyboard_input: Res<ButtonInput<KeyCode>>,
-    time: Res<Time>,
-) {
+pub fn player_input(mut commands: Commands, mut query: Query<(&mut Movement, &mut Transform, &mut Player)>, keyboard_input: Res<ButtonInput<KeyCode>>, time: Res<Time>) {
     for (mut movement, mut player_transform, mut player) in query.iter_mut() {
         if keyboard_input.pressed(KeyCode::ArrowLeft) {
             player_transform.rotate_z(PLAYER_ROTATION_SPEED * time.delta_seconds());
@@ -41,18 +36,12 @@ pub fn player_input(
         }
 
         if keyboard_input.pressed(KeyCode::ArrowUp) {
-            let direction =
-                Vec2::from_angle(player_transform.rotation.to_scaled_axis().z + FRAC_PI_2)
-                    .normalize();
+            let direction = Vec2::from_angle(player_transform.rotation.to_scaled_axis().z + FRAC_PI_2).normalize();
             movement.velocity += direction * PLAYER_SPEED * time.delta_seconds();
         }
-        if player.fire_cooldown.tick(time.delta()).finished()
-            && keyboard_input.just_pressed(KeyCode::Space)
-        {
+        if player.fire_cooldown.tick(time.delta()).finished() && keyboard_input.just_pressed(KeyCode::Space) {
             info!("Bullet spawned");
-            commands.add(SpawnBullet {
-                transform: *player_transform,
-            });
+            commands.add(SpawnBullet { transform: *player_transform });
             player.fire_cooldown.reset();
         }
     }
@@ -87,11 +76,7 @@ pub fn on_collision_system(
     collision_events.clear();
 }
 
-pub fn on_invincibility_end_system(
-    mut commands: Commands,
-    mut invincibility_end_events: EventReader<InvincibleEndEvent>,
-    query: Query<Entity, (With<Player>, Without<Collider>)>,
-) {
+pub fn on_invincibility_end_system(mut commands: Commands, mut invincibility_end_events: EventReader<InvincibleEndEvent>, query: Query<Entity, (With<Player>, Without<Collider>)>) {
     for event in invincibility_end_events.read() {
         if let Ok(entity) = query.get(event.entity) {
             info!("Add collider to {:?}!", entity);

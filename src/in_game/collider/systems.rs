@@ -3,10 +3,7 @@ use bevy::prelude::*;
 use super::components::*;
 use super::events::*;
 
-pub fn check_collision(
-    mut collision_events: EventWriter<CollisionEvent>,
-    query: Query<(Entity, &Transform, &Collider)>,
-) {
+pub fn check_collision(mut collision_events: EventWriter<CollisionEvent>, query: Query<(Entity, &Transform, &Collider)>) {
     let mut entities = Vec::new();
     let mut transforms = Vec::new();
     let mut colliders = Vec::new();
@@ -23,15 +20,9 @@ pub fn check_collision(
 
             match (colliders[i].shape, colliders[j].shape) {
                 (ColliderShape::Circle(radius1), ColliderShape::Circle(radius2)) => {
-                    let distance = Vec2::distance(
-                        transforms[i].translation.truncate(),
-                        transforms[j].translation.truncate(),
-                    );
+                    let distance = Vec2::distance(transforms[i].translation.truncate(), transforms[j].translation.truncate());
                     if distance < radius1 + radius2 {
-                        info!(
-                            "##### Collision detected between {:?} and {:?}",
-                            entities[i], entities[j]
-                        );
+                        info!("##### Collision detected between {:?} and {:?}", entities[i], entities[j]);
                         info!("Distance: {}", distance);
                         info!("Radius: {} - {}", radius1, radius2,);
                         collision_events.send(CollisionEvent {

@@ -15,10 +15,7 @@ impl Plugin for BulletPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(
             Update,
-            (
-                on_collision.run_if(in_state(GameState::InGame)),
-                despawn_out_of_bounds.run_if(in_state(GameState::InGame)),
-            ),
+            (on_collision.run_if(in_state(GameState::InGame)), despawn_out_of_bounds.run_if(in_state(GameState::InGame))),
         );
     }
 }

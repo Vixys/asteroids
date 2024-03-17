@@ -71,13 +71,8 @@ impl Command for SpawnAsteroid {
     fn apply(self, world: &mut World) {
         let spawn_area = world.get_resource::<AsteroidLineSpawner>().unwrap();
         let asset_server = world.get_resource::<AssetServer>().unwrap();
-        let position = self
-            .position
-            .unwrap_or_else(|| spawn_area.random_point().extend(0.0));
-        let direction = self
-            .direction
-            .unwrap_or_else(|| (Vec3::ZERO - position).truncate())
-            .rotate_2d(self.direction_noise);
+        let position = self.position.unwrap_or_else(|| spawn_area.random_point().extend(0.0));
+        let direction = self.direction.unwrap_or_else(|| (Vec3::ZERO - position).truncate()).rotate_2d(self.direction_noise);
         let asteroid = Asteroid {
             shape: self.shape,
             size: self.size,

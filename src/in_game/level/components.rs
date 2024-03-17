@@ -29,10 +29,7 @@ impl Default for AsteroidLevel {
 impl AsteroidLevel {
     pub fn next_level(&mut self) {
         self.id += 1;
-        self.spawning_timer = Timer::from_seconds(
-            self.spawning_timer.duration().as_secs_f32() * 0.9,
-            TimerMode::Once,
-        );
+        self.spawning_timer = Timer::from_seconds(self.spawning_timer.duration().as_secs_f32() * 0.9, TimerMode::Once);
         self.max_asteroids += 2;
         self.total_asteroids += 5;
         self.initial_asteroids += 2;

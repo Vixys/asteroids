@@ -37,11 +37,7 @@ pub fn setup(mut commands: Commands, window_query: Query<&Window, With<PrimaryWi
     });
 }
 
-pub fn on_collision_system(
-    mut commands: Commands,
-    mut collision_events: EventReader<CollisionEvent>,
-    query: Query<(Entity, &Asteroid, &Transform, &Movement)>,
-) {
+pub fn on_collision_system(mut commands: Commands, mut collision_events: EventReader<CollisionEvent>, query: Query<(Entity, &Asteroid, &Transform, &Movement)>) {
     for event in collision_events.read() {
         let entity2 = query.get(event.entity2);
 

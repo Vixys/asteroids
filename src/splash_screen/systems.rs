@@ -34,11 +34,7 @@ pub fn setup_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
         });
 }
 
-pub fn go_to_menu_screen(
-    mut next_state: ResMut<NextState<GameState>>,
-    mut query: Query<&mut SwitchToMenuScreen>,
-    time: Res<Time>,
-) {
+pub fn go_to_menu_screen(mut next_state: ResMut<NextState<GameState>>, mut query: Query<&mut SwitchToMenuScreen>, time: Res<Time>) {
     let mut timer = query.single_mut();
 
     timer.timer.tick(time.delta());

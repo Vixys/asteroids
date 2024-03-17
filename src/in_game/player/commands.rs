@@ -11,9 +11,7 @@ pub struct SpawnPlayer {
 
 impl Default for SpawnPlayer {
     fn default() -> Self {
-        Self {
-            position: Vec3::ZERO,
-        }
+        Self { position: Vec3::ZERO }
     }
 }
 

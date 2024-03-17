@@ -18,10 +18,7 @@ impl Command for SpawnStar {
         world.spawn((
             SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(
-                        STAR_MAX_SIZE / self.layer,
-                        STAR_MAX_SIZE / self.layer,
-                    )),
+                    custom_size: Some(Vec2::new(STAR_MAX_SIZE / self.layer, STAR_MAX_SIZE / self.layer)),
                     ..default()
                 },
                 texture: asset_server.load(STAR_ASSET_PATH),

@@ -13,10 +13,7 @@ pub struct InvinciblePlugin;
 
 impl Plugin for InvinciblePlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            FixedUpdate,
-            fade_invincible.run_if(in_state(GameState::InGame)),
-        )
-        .add_event::<InvincibleEndEvent>();
+        app.add_systems(FixedUpdate, fade_invincible.run_if(in_state(GameState::InGame)))
+            .add_event::<InvincibleEndEvent>();
     }
 }

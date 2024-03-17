@@ -16,13 +16,7 @@ impl Command for SpawnBullet {
 
         bullet.sprite.transform = self.transform;
         bullet.sprite.texture = asset_server.load(BULLET_ASSET_PATH);
-        bullet.movement.velocity = self
-            .transform
-            .rotation
-            .mul_vec3(Vec3::Y)
-            .truncate()
-            .normalize()
-            * BULLET_SPEED;
+        bullet.movement.velocity = self.transform.rotation.mul_vec3(Vec3::Y).truncate().normalize() * BULLET_SPEED;
 
         world.spawn((bullet, OnInGameScreen));
     }

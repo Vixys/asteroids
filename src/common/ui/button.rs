@@ -48,15 +48,7 @@ impl UiButtonElement for ChildBuilder<'_> {
 }
 
 pub fn button_system(
-    mut interaction_query: Query<
-        (
-            &Interaction,
-            &mut BackgroundColor,
-            &mut BorderColor,
-            &ButtonAction,
-        ),
-        (Changed<Interaction>, With<Button>),
-    >,
+    mut interaction_query: Query<(&Interaction, &mut BackgroundColor, &mut BorderColor, &ButtonAction), (Changed<Interaction>, With<Button>)>,
     mut next_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, mut color, mut border_color, action) in &mut interaction_query {

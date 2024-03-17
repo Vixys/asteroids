@@ -34,11 +34,7 @@ pub fn setup_in_game_ui(mut commands: Commands, asset_server: Res<AssetServer>) 
         });
 }
 
-pub fn update_ui(
-    mut commands: Commands,
-    q_ui_lives: Query<Entity, With<UiLive>>,
-    q_player_live: Query<&PlayerLives, Changed<PlayerLives>>,
-) {
+pub fn update_ui(mut commands: Commands, q_ui_lives: Query<Entity, With<UiLive>>, q_player_live: Query<&PlayerLives, Changed<PlayerLives>>) {
     for live in q_player_live.iter() {
         for entity in q_ui_lives.iter().skip(live.0 as usize) {
             commands.entity(entity).despawn();

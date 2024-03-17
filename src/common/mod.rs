@@ -11,8 +11,6 @@ pub struct CommonPlugin;
 
 impl Plugin for CommonPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(UiPlugin)
-            .add_plugins(MovementPlugin)
-            .add_plugins(WarpPlugin);
+        app.add_plugins(UiPlugin).add_plugins(MovementPlugin).add_plugins(WarpPlugin);
     }
 }
