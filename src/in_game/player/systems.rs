@@ -39,7 +39,7 @@ pub fn player_input(mut commands: Commands, mut query: Query<(&mut Movement, &mu
             let direction = Vec2::from_angle(player_transform.rotation.to_scaled_axis().z + FRAC_PI_2).normalize();
             movement.velocity += direction * PLAYER_SPEED * time.delta_seconds();
         }
-        if player.fire_cooldown.tick(time.delta()).finished() && keyboard_input.just_pressed(KeyCode::Space) {
+        if player.fire_cooldown.tick(time.delta()).finished() && keyboard_input.pressed(KeyCode::Space) {
             info!("Bullet spawned");
             commands.add(SpawnBullet { transform: *player_transform });
             player.fire_cooldown.reset();
