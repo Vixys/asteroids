@@ -10,6 +10,6 @@ pub struct StarParallaxPlugin;
 
 impl Plugin for StarParallaxPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameState::Menu), setup);
+        app.add_systems(OnEnter(GameState::Menu), setup.run_if(run_once()));
     }
 }
